@@ -2,9 +2,25 @@
 
 {% block main %}
 
+    {#
+        if the user is authentiated, greet them.
+        If they are an admin, let them know they can go to the backend
+        for others, don't show anything
+    #}
+
+
+    {% if is_granted("ROLE_USER") %}
+        <h1>Hey user</h1>
+    {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ record|edit_link }}">Edit me</a>
+    {% endif %}
+
+
     {% if record|default %}
 
-        <h1>{{ record|title }}</h1>
+        <h2>{{ record|title }}</h2>
 
         {# Remove this block if you don't need it anymore. #}
         {{ include('partials/_fresh_install.twig') }}
@@ -26,5 +42,5 @@
 {% block aside %}
 
     {{ include('partials/_aside.twig') }}
-    
+
 {% endblock aside %}

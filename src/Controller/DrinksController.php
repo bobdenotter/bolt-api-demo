@@ -5,12 +5,17 @@ namespace App\Controller;
 use App\Entity\Drink;
 use App\Repository\DrinkRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/v1/api")
+ */
 class DrinksController extends AbstractController
 {
     /**
@@ -31,9 +36,19 @@ class DrinksController extends AbstractController
 
     /**
      * @Route("/drinks", name="drinks", methods={"GET"})
+     * @IsGranted("ROLE_API_READ")
      */
     public function index(): Response
     {
+        if ($this->isGranted('ROLE_API_REAd') {
+            //one set of things
+
+            //return respoinse
+        }
+
+        // otherwise, do other stuff
+
+
         $drinks = $this->drinkRepository->findAll();
 
         return new JsonResponse($drinks);
@@ -41,6 +56,7 @@ class DrinksController extends AbstractController
 
     /**
      * @Route("/drinks/{id}", methods={"GET"}, requirements={"id": "\d+"})
+     * @IsGranted("ROLE_API_READ")
      */
     public function getDrink(Drink $drink): JsonResponse
     {
@@ -48,6 +64,7 @@ class DrinksController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_API_WRITE")
      * @Route("/drinks", methods={"POST"})
      */
     public function postDrink(): JsonResponse
@@ -67,6 +84,7 @@ class DrinksController extends AbstractController
 
     /**
      * @Route("/drinks/{id}", methods={"DELETE"}, requirements={"id": "\d+"})
+     * @IsGranted("ROLE_API_DELETE")
      */
     public function deleteDrink(Drink $drink): JsonResponse
     {

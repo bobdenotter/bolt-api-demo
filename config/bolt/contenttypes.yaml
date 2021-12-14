@@ -4,6 +4,17 @@
 # The Homepage content type is a singleton: There can be only one record of this
 # content type.
 
+
+recipes:
+    name: Recipes
+    singular_name: Recipe
+    fields:
+        title:
+            type: text
+        content:
+            type: redactor
+
+
 homepage:
     name: Homepage
     singular_name: Homepage
