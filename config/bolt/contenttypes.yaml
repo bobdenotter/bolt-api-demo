@@ -11,8 +11,15 @@ recipes:
     fields:
         title:
             type: text
-        content:
+        photo:
+            type: image
+        instructions:
             type: redactor
+        recipe_id:
+            type: number
+            readonly: true
+        slug:
+            type: slug
 
 
 homepage:
