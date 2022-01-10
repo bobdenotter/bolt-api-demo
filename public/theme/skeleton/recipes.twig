@@ -1,0 +1,30 @@
+{% extends 'listing.twig' %}
+
+{% block main %}
+{#    {% dump(app.request) %}#}
+{#    {% dump(app.session) %}#}
+
+    {{ include('@bolt/_partials/_flash_messages.html.twig') }}
+
+    {% if is_granted("ROLE_ADMIN") %}
+        {{ parent() }}
+    {% else %}
+        <p>Sorry, you don't have access to this.</p>
+
+        <p>Please login below</p>
+
+        <form action="/bolt/login" method="post">
+            <label>Username</label>
+            <input name="login[username]">
+            <br>
+            <label>Password</label>
+            <input name="login[password]" type="password">
+            <input type="hidden" name="login[_token]" value="{{ csrf_token('login_csrf_token') }}">
+
+            <button type="submit">LOG ME IN</button>
+            <input type="hidden" name="_target_path" value="/recipes">
+        </form>
+
+    {% endif %}
+{% endblock %}
+

@@ -1,0 +1,9 @@
+{% extends 'record.twig' %}
+
+{% block main %}
+    {% if is_granted("ROLE_ADMIN") %}
+        {{ parent() }}
+    {% else %}
+        <p>Sorry, you don't have access to this.</p>
+    {% endif %}
+{% endblock %}
